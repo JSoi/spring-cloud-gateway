@@ -1,0 +1,28 @@
+spring.application.name: spring-cloud-gateway
+server.port: 80
+spring:
+  cloud:
+    gateway:
+      globals:
+        add-to-simple-url-handler-mapping: true
+        # CORS 사전 실행 요청(Preflight Request)을 위한 OPTIONS 설정
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: GET, POST, PUT, DELETE, OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        # Access-Control-Allow Credentials, Access-Control-Allow-Origin 의 중복을 방지하는 설정
+auth-verify-uri: http://localhost:9091/auth/verify
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.security.access: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
